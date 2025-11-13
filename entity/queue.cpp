@@ -5,7 +5,7 @@
 using namespace std;
 
 
-NodeQueue::NodeQueue(string value) : data(value), next(nullptr) {}
+NodeQueue::NodeQueue(char value) : data(value), next(nullptr), priority(1) {}
 
 Queue::Queue() : head(nullptr), tail(nullptr) {}
 
@@ -13,7 +13,7 @@ bool Queue::is_empty() {
     return head == nullptr;
 }
 
-void Queue::enqueue(string value) {
+void Queue::enqueue(char value) {
     NodeQueue* p = new NodeQueue(value);
     
     if (is_empty()) {
@@ -39,7 +39,7 @@ void Queue::print() {
     NodeQueue* p = head;
 
     while (p != nullptr) {
-        cout << p->data << " ";
+        cout << p->data << "-" << p->priority << " ";
         p = p->next;
     }
     cout << endl;
@@ -52,3 +52,41 @@ void Queue::clear() {
 Queue::~Queue() {
     clear();
 }
+
+void Queue::sort_by_priority() {
+    if (head == nullptr || head->next == nullptr) return;
+
+    bool swapped;
+    do {
+        swapped = false;
+        NodeQueue* curr = head;
+        NodeQueue* prev = nullptr;
+
+        while (curr->next != nullptr) {
+            NodeQueue* next = curr->next;
+
+            if (curr->priority > next->priority) {
+                swapped = true;
+
+                if (prev == nullptr) {
+                    head = next;
+                } else {
+                    prev->next = next;
+                }
+
+                curr->next = next->next;
+                next->next = curr;
+
+                prev = next;
+            } else {
+                prev = curr;
+                curr = curr->next;
+            }
+        }
+
+        tail = head;
+        while (tail->next != nullptr) tail = tail->next;
+
+    } while (swapped);
+}
+

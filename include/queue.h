@@ -5,9 +5,10 @@
 using namespace std;
 
 struct NodeQueue {
-    string data;
+    char data;
     NodeQueue* next;
-    NodeQueue(string value);
+    NodeQueue(char value);
+    int priority;
 };
 
 struct Queue {
@@ -16,9 +17,10 @@ struct Queue {
 
     Queue();
     bool is_empty();
-    void enqueue(string value);
+    void enqueue(char value);
     void dequeue();
     void print();
     void clear();
+    void sort_by_priority();
     ~Queue();
 };
