@@ -121,7 +121,7 @@ int main() {
     HoffQueue hoff;
     Queue queue;
 
-    string ser = "poor mister evas";
+    string ser = "abracadabra";
     for (char c : ser) {
         search(c, queue);
     }
