@@ -5,6 +5,8 @@
 
 using namespace std;
 
+// Вариант 2
+
 static void print_subarray(const Array& arr, int l, int r) {
     cout << "[";
     for (int i = l; i <= r; ++i) {

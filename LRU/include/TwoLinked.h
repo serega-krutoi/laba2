@@ -5,33 +5,32 @@
 
 using namespace std;
 
-struct NodeOneLinked {
+struct TwoLinkedNode {
     string data;
-    NodeOneLinked *pNext;
-    NodeOneLinked(string value);
+    TwoLinkedNode* pNext;
+    TwoLinkedNode* pPrevios; 
+    TwoLinkedNode(string value);
 };
 
-struct listOneLinked {
-    NodeOneLinked* head;
-    NodeOneLinked* tail;
+struct listTwoLinked {
+    TwoLinkedNode* head;
+    TwoLinkedNode* tail;
 
-    listOneLinked();
+    listTwoLinked();
     bool is_empty();
-    NodeOneLinked* find(string value);
-    NodeOneLinked* find_previous(string value);
-    NodeOneLinked* find_next(string value);
+    TwoLinkedNode* find(string value);
     void push_back(string value);
     void push_forward(string value);
     void push_beforeNode(string newValue, string placedData);
     void push_afterNode(string newValue, string placedData);
-    void delete_forward();
     void delete_back();
+    void delete_forward();
     void delete_beforeNode(string value);
     void delete_afterNode(string value);
     void delete_data(string value);
-    void print_recursion();
-    void print_recursion_impl(NodeOneLinked* p);
     void print_sequentially();
+    void print_reverse();
     void clear();
-    ~listOneLinked();
+    void move_to_front(TwoLinkedNode* node);   
+    ~listTwoLinked();
 };

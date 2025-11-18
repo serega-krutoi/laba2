@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+// Вариант 7
+
 using namespace std;
 
 const int TABLE_SIZE = 17; // маленькое простое число

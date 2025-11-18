@@ -1,15 +1,5 @@
-#include <iostream>
-#include <string>
-#include "include/stack.h" 
-using namespace std;
-
-struct Node {
-    string data;
-    Node* left;
-    Node* right;
-
-    Node(string val) : data(val), left(nullptr), right(nullptr) {}
-};
+#include"../include/dfs.h"
+#include"../include/stack.h"
 
 void dfs(Node* root) {
     if (root == nullptr) return;
@@ -61,27 +51,4 @@ void dfs(Node* root) {
             top = newNode;
         }
     }
-}
-
-int main() {
-    /*
-            A
-           / \
-          B   C
-         / \   \
-        D   E   F
-    */
-
-    Node* root = new Node("A");
-    root->left = new Node("B");
-    root->right = new Node("C");
-    root->left->left = new Node("D");
-    root->left->right = new Node("E");
-    root->right->right = new Node("F");
-
-    cout << "Обход дерева в глубину (DFS) с использованием стека:\n";
-    dfs(root);
-    cout << endl;
-
-    return 0;
 }
