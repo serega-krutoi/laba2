@@ -3,17 +3,29 @@
 
 using namespace std;
 
-struct Set {
-    int* data;     // массив значений
-    int capacity;  // максимум элементов
-    int count;     // текущий размер множества
+struct SetNode {
+    int key;
+    SetNode* next;
 
-    Set(int cap = 100);
-    bool is_empty();
-    bool contains(int value);
-    bool insert(int value);
-    bool remove(int value);
-    int size();
-    void print();
+    SetNode(int k) : key(k), next(nullptr) {}
+};
+
+struct Set {
+    static const int TABLE_SIZE = 101; // простое число, можно поменять
+    SetNode* table[TABLE_SIZE];
+    int count;
+
+    Set();
+
+    bool contains(int key) const;
+    bool insert(int key);
+    bool erase(int key);
+    int size() const;
+    void clear();
+    void print() const;
+
     ~Set();
+
+private:
+    size_t hash(int key) const;
 };
