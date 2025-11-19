@@ -1,52 +1,42 @@
-#include"../include/dfs.h"
-#include"../include/stack.h"
+#include "../include/dfs.h"
+#include <iostream>
+using namespace std;
 
 void dfs(Node* root) {
     if (root == nullptr) return;
 
-    Stack st;                    
-    st.push(root->data);         
-    StackNode* ptr = st.head;     // для поиска узла по имени
-
-    // вспомогательный стек указателей
-    StackNode* temp = nullptr;
-
-    // сопоставление
-    Stack nodeStack;
-    nodeStack.push(root->data); //значение корня
-
-    // Вспомогательный стек для реальных указателей узлов
+    // Внутренняя структура: простой стек для указателей на узлы
     struct NodeStack {
         Node* node;
         NodeStack* next;
         NodeStack(Node* n) : node(n), next(nullptr) {}
     };
 
-    // Реализация стека для Node*
-    NodeStack* top = new NodeStack(root);
+    NodeStack* top = nullptr;   // вершина стека
+    Node* current = root;       // указатель на текущий узел
 
-    while (top != nullptr) {
-        Node* current = top->node;
+    // Центрированный обход: левый подузел, корень, правый подузел
+    while (current != nullptr || top != nullptr) {
 
-        // удалить верхний элемент
+        // Движение к левому подузлу, узлы по пути кладутся в стек
+        while (current != nullptr) {
+            NodeStack* newNode = new NodeStack(current);
+            newNode->next = top;
+            top = newNode;
+
+            current = current->left;
+        }
+
+        // Снятие верхушки стека
         NodeStack* temp = top;
         top = top->next;
+        current = temp->node;
         delete temp;
 
-        // Обработка узла
+        // Обработка узла в центре
         cout << current->data << " ";
 
-        // В стек сначала добавляется правый, потом левый,
-        // чтобы левый обрабатывался первым (LIFO)
-        if (current->right) {
-            NodeStack* newNode = new NodeStack(current->right);
-            newNode->next = top;
-            top = newNode;
-        }
-        if (current->left) {
-            NodeStack* newNode = new NodeStack(current->left);
-            newNode->next = top;
-            top = newNode;
-        }
+        // Переход к правому подузлу
+        current = current->right;
     }
 }

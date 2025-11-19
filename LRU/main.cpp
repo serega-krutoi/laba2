@@ -1,19 +1,50 @@
-#include<iostream>
-#include"include/kashLRU.h"
+#include <iostream>
+#include <string>
+#include "include/kashLRU.h"
+
+using namespace std;
+
+//g++ main.cpp entity/kashLRU.cpp entity/LRUHashTable.cpp entity/TwoLinked.cpp -o m
+
+// Задание 7: LRU-кэш, вариант 1
+// Формат ввода:
+// cap Q
+// далее Q строк:
+//   SET x y
+//   GET x
+// Вывод: значения GET через пробел, вместо отсутствующих — -1.
 
 int main() {
-    LRUCache cache(3); // кэш на 3 элемента
 
-    cache.put("a", "1");
-    cache.put("b", "2");
-    cache.put("c", "3");
+    int cap, Q;
+    cin >> cap >> Q;
 
-    cout << cache.get("a") << endl; // 1  (a становится самым свежим)
-    cache.put("d", "4");            // кэш полон → выкидывается самый старый (b)
+    LRUCache cache(cap);
 
-    cout << cache.get("b") << endl; // NOT_FOUND
-    cout << cache.get("c") << endl; // 3
-    cout << cache.get("d") << endl; // 4
+    string cmd, x, y;
+    bool firstOutput = true;
 
+    for (int i = 0; i < Q; ++i) {
+        cin >> cmd;
+
+        if (cmd == "SET") {
+            cin >> x >> y;
+            cache.put(x, y);
+        }
+        else if (cmd == "GET") {
+            cin >> x;
+            string res = cache.get(x);
+
+            if (!firstOutput) cout << " ";
+            firstOutput = false;
+
+            if (res == "NOT_FOUND")
+                cout << -1;
+            else
+                cout << res;
+        }
+    }
+
+    cout << endl;
     return 0;
 }

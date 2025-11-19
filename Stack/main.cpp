@@ -3,6 +3,8 @@
 #include "include/dfs.h" 
 using namespace std;
 
+//g++ main.cpp entity/dfs.cpp -o m
+
 int main() {
     /*
             A
@@ -12,6 +14,7 @@ int main() {
         D   E   F
     */
 
+    // Ручное построение дерева для примера
     Node* root = new Node("A");
     root->left = new Node("B");
     root->right = new Node("C");
@@ -19,7 +22,7 @@ int main() {
     root->left->right = new Node("E");
     root->right->right = new Node("F");
 
-    cout << "Обход дерева в глубину (DFS) с использованием стека:\n";
+    cout << "Обход дерева в глубину (DFS) через собственный стек:\n";
     dfs(root);
     cout << endl;
 

@@ -4,9 +4,10 @@
 using namespace std;
 
 // Вариант 2
+//g++ main.cpp entity/set.cpp -o m
 
 int main() {
-    // Исходное множество
+    // Исходный набор
     Set S;
     S.insert(5);
     S.insert(8);
@@ -14,11 +15,12 @@ int main() {
     S.insert(14);
     S.insert(7);
 
-    // 1. Сбор элементов множества S в обычный массив arr
+    // 1. Копирование всех чисел из набора S в массив arr
     int n = S.size();
     int* arr = new int[n];
     int pos = 0;
 
+    // Проход по всем цепочкам в таблице
     for (int i = 0; i < Set::TABLE_SIZE; ++i) {
         SetNode* p = S.table[i];
         while (p != nullptr) {
@@ -27,16 +29,19 @@ int main() {
         }
     }
 
+    // Сумма всех чисел
     int sum = 0;
     for (int i = 0; i < n; ++i) sum += arr[i];
 
+    // Нужна половина суммы (или ближе всего к ней)
     int target = sum / 2;
 
-    // 2. Можно ли набрать сумму j
+    // 2. dp[j] — можно ли набрать сумму j
     bool* dp = new bool[target + 1];
     for (int j = 0; j <= target; ++j) dp[j] = false;
     dp[0] = true;
 
+    // Классическое заполнение массива dp
     for (int i = 0; i < n; ++i) {
         int x = arr[i];
         for (int j = target; j >= x; --j) {
@@ -44,7 +49,7 @@ int main() {
         }
     }
 
-    // 3. Поиск максимальной достижимой суммы ≤ target
+    // 3. Поиск наибольшей суммы, не больше target
     int best = 0;
     for (int j = target; j >= 0; --j) {
         if (dp[j]) {
@@ -53,16 +58,17 @@ int main() {
         }
     }
 
-    // 4. Восстановление подмножества A и B
+    // 4. Восстановление двух подмножеств A и B
     Set A, B;
     int curr = best;
     int sumA = 0, sumB = 0;
 
+    // Идём по массиву с конца и решаем, куда идёт каждый x
     for (int i = n - 1; i >= 0; --i) {
         int x = arr[i];
 
         if (curr >= x) {
-            // Подсчет, можно ли набрать curr - x из первых i элементов
+            // Проверка: достижима ли сумма curr - x при использовании первых i чисел
             bool* newdp = new bool[target + 1];
             for (int j = 0; j <= target; ++j) newdp[j] = false;
             newdp[0] = true;
@@ -74,22 +80,26 @@ int main() {
                 }
             }
 
+            // Если curr - x достижимо, x идёт в A
             if (newdp[curr - x]) {
                 A.insert(x);
                 sumA += x;
                 curr -= x;
             } else {
+                // Иначе x идёт в B
                 B.insert(x);
                 sumB += x;
             }
 
             delete[] newdp;
         } else {
+            // x не подходит под текущую curr, сразу в B
             B.insert(x);
             sumB += x;
         }
     }
 
+    // Вывод результата
     cout << "Множество S = ";
     S.print(); cout << "\n";
 
