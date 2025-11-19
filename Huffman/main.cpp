@@ -28,11 +28,10 @@ int main() {
         search(c, queue);
     }
 
-    // просто для контроля:
     queue.sort_by_priority();
     queue.print();
 
-    // Переносим элементы из Queue в HoffQueue
+    // Перенос элементов из Queue в HoffQueue
     NodeQueue* curr = queue.head;
     while (curr != nullptr) {
         NodeHoffQueue* node = new NodeHoffQueue(curr->data, curr->priority);
@@ -40,11 +39,9 @@ int main() {
         curr = curr->next;
     }
 
-    // Строим дерево Хаффмана
+    // дерево Хаффмана
     NodeHoffQueue* root = buildHuffman(hoff);
     print_codes(root);
-
-    // тут можно, например, вывести коды символов, если захочешь
 
     return 0;
 }

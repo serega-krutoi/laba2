@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
     string dataFilePath;
     string queryFilePath;
 
-    // Парсим аргументы командной строки
+    // Парс аргументов командной строки
     for (int i = 1; i < argc; ++i) {
         string arg = argv[i];
         if (arg == "--file" && i + 1 < argc) {
@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
     Set set;
 
-    // 1. Читаем начальное множество из файла --file
+    // 1. Чтение начального множества из файла --file
     ifstream dataFile(dataFilePath);
     if (!dataFile.is_open()) {
         cerr << "Cannot open data file: " << dataFilePath << endl;
@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
     }
     dataFile.close();
 
-    // 2. Обрабатываем запросы из файла --query
+    // 2. Обработка запроса из файла --query
     ifstream queryFile(queryFilePath);
     if (!queryFile.is_open()) {
         cerr << "Cannot open query file: " << queryFilePath << endl;
@@ -57,9 +57,25 @@ int main(int argc, char* argv[]) {
             if (set.contains(x)) cout << "YES\n";
             else cout << "NO\n";
         }
-        // если встретится другая команда — можно игнорировать или ругаться
     }
 
     queryFile.close();
+
+    // 3. Запись обновленного множества обратно в файл data.txt
+    ofstream out(dataFilePath);
+    if (!out.is_open()) {
+        cerr << "Cannot open file for writing: " << dataFilePath << endl;
+        return 1;
+    }
+
+    for (int i = 0; i < Set::TABLE_SIZE; ++i) {
+        SetNode* p = set.table[i];
+        while (p != nullptr) {
+            out << p->key << " ";
+            p = p->next;
+        }
+    }
+    out.close();
+
     return 0;
 }

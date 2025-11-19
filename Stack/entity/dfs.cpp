@@ -4,18 +4,16 @@
 void dfs(Node* root) {
     if (root == nullptr) return;
 
-    Stack st;                     // твой стек
-    st.push(root->data);          // начнем с корня
+    Stack st;                    
+    st.push(root->data);         
     StackNode* ptr = st.head;     // для поиска узла по имени
 
-    // Чтобы соответствовать стеку узлов, создадим вспомогательный стек указателей
+    // вспомогательный стек указателей
     StackNode* temp = nullptr;
 
-    // Поскольку твой стек хранит только string, сделаем сопоставление вручную
-    // Здесь вместо хранения указателей будем просто использовать логику обхода
-    // Реализуем DFS "вручную" для дерева
+    // сопоставление
     Stack nodeStack;
-    nodeStack.push(root->data); // поместим значение корня
+    nodeStack.push(root->data); //значение корня
 
     // Вспомогательный стек для реальных указателей узлов
     struct NodeStack {
@@ -24,13 +22,13 @@ void dfs(Node* root) {
         NodeStack(Node* n) : node(n), next(nullptr) {}
     };
 
-    // Реализация собственного стека для Node*
+    // Реализация стека для Node*
     NodeStack* top = new NodeStack(root);
 
     while (top != nullptr) {
         Node* current = top->node;
 
-        // "Pop" — удалить верхний элемент
+        // удалить верхний элемент
         NodeStack* temp = top;
         top = top->next;
         delete temp;
@@ -38,7 +36,7 @@ void dfs(Node* root) {
         // Обработка узла
         cout << current->data << " ";
 
-        // В стек сначала добавляем правый, потом левый,
+        // В стек сначала добавляется правый, потом левый,
         // чтобы левый обрабатывался первым (LIFO)
         if (current->right) {
             NodeStack* newNode = new NodeStack(current->right);

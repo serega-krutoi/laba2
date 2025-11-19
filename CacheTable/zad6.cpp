@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const int TABLE_SIZE = 17; // маленькое простое число
+const int TABLE_SIZE = 17;
 
 struct Node {
     string key;
@@ -41,7 +41,7 @@ void insert(Node* table[], const string& key, const string& value) {
 
     while (curr != nullptr) {
         if (curr->key == key) {
-            curr->value = value; // обновляем
+            curr->value = value; // обновление
             return;
         }
         curr = curr->next;
@@ -79,7 +79,7 @@ bool areIsomorphic(const string& a, const string& b) {
             return false;
         }
 
-        // если ещё не было, добавляем оба направления
+        // если ещё не было, добавление обоих направлений
         if (nodeAB == nullptr && nodeBA == nullptr) {
             insert(mapAB, keyA, keyB); // a[i] -> b[i]
             insert(mapBA, keyB, keyA); // b[i] -> a[i]

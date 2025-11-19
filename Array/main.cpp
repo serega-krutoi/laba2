@@ -30,14 +30,14 @@ int main() {
         while (ss >> token) listArray::push_back(arr, token);
     }
 
-    // 2) Читаем целевую сумму
+    // 2) Чтение целевой суммы
     cout << "Введите целевое значение суммы:\n";
     long long target = 0;
     cin >> target;
 
     const size_t n = listArray::length(arr);
 
-    // 3) Перегоняем строки -> числа в сырой массив (без vector)
+    // 3) Перегоняем строки -> числа в сырой массив 
     long long* a = nullptr;
     if (n > 0) a = new long long[n];
     for (size_t i = 0; i < n; ++i) {

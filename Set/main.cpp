@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include "include/set.h"
 
 using namespace std;
@@ -15,72 +14,82 @@ int main() {
     S.insert(14);
     S.insert(7);
 
-    // 1. Соберём элементы множества S во вспомогательный массив arr
-    vector<int> arr;
+    // 1. Сбор элементов множества S в обычный массив arr
+    int n = S.size();
+    int* arr = new int[n];
+    int pos = 0;
+
     for (int i = 0; i < Set::TABLE_SIZE; ++i) {
-        SetNode* p = S.table[i];   // пробегаем по цепочкам
+        SetNode* p = S.table[i];
         while (p != nullptr) {
-            arr.push_back(p->key);
+            arr[pos++] = p->key;
             p = p->next;
         }
     }
 
-    int n = (int)arr.size();
     int sum = 0;
-    for (int x : arr) sum += x;
+    for (int i = 0; i < n; ++i) sum += arr[i];
 
     int target = sum / 2;
 
-    // 2. Динамическое программирование: dp[j] — можно ли набрать сумму j
-    vector<bool> dp(target + 1, false);
+    // 2. Можно ли набрать сумму j
+    bool* dp = new bool[target + 1];
+    for (int j = 0; j <= target; ++j) dp[j] = false;
     dp[0] = true;
 
-    for (int x : arr) {
-        for (int j = target; j >= x; j--) {
+    for (int i = 0; i < n; ++i) {
+        int x = arr[i];
+        for (int j = target; j >= x; --j) {
             if (dp[j - x]) dp[j] = true;
         }
     }
 
-    // 3. Находим максимальную достижимую сумму ≤ target
+    // 3. Поиск максимальной достижимой суммы ≤ target
     int best = 0;
-    for (int j = target; j >= 0; j--) {
+    for (int j = target; j >= 0; --j) {
         if (dp[j]) {
             best = j;
             break;
         }
     }
 
-    // 4. Восстанавливаем подмножества A и B
+    // 4. Восстановление подмножества A и B
     Set A, B;
     int curr = best;
     int sumA = 0, sumB = 0;
 
-    for (int i = n - 1; i >= 0; i--) {
-        if (curr >= arr[i]) {
-            // проверяем, можно ли набрать curr - arr[i] из первых i элементов
-            vector<bool> newdp(target + 1, false);
+    for (int i = n - 1; i >= 0; --i) {
+        int x = arr[i];
+
+        if (curr >= x) {
+            // Подсчет, можно ли набрать curr - x из первых i элементов
+            bool* newdp = new bool[target + 1];
+            for (int j = 0; j <= target; ++j) newdp[j] = false;
             newdp[0] = true;
-            for (int k = 0; k < i; k++) {
-                for (int j = target; j >= arr[k]; j--) {
-                    if (newdp[j - arr[k]]) newdp[j] = true;
+
+            for (int k = 0; k < i; ++k) {
+                int y = arr[k];
+                for (int j = target; j >= y; --j) {
+                    if (newdp[j - y]) newdp[j] = true;
                 }
             }
 
-            if (newdp[curr - arr[i]]) {
-                A.insert(arr[i]);
-                sumA += arr[i];
-                curr -= arr[i];
+            if (newdp[curr - x]) {
+                A.insert(x);
+                sumA += x;
+                curr -= x;
             } else {
-                B.insert(arr[i]);
-                sumB += arr[i];
+                B.insert(x);
+                sumB += x;
             }
+
+            delete[] newdp;
         } else {
-            B.insert(arr[i]);
-            sumB += arr[i];
+            B.insert(x);
+            sumB += x;
         }
     }
 
-    // 5. Вывод результата
     cout << "Множество S = ";
     S.print(); cout << "\n";
 
@@ -92,7 +101,13 @@ int main() {
 
     cout << "Сумма A = " << sumA << endl;
     cout << "Сумма B = " << sumB << endl;
-    cout << "Разница = " << abs(sumA - sumB) << endl;
+
+    int diff = sumA - sumB;
+    if (diff < 0) diff = -diff;
+    cout << "Разница = " << diff << endl;
+
+    delete[] dp;
+    delete[] arr;
 
     return 0;
 }

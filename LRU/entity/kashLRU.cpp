@@ -10,7 +10,7 @@ string LRUCache::get(const string& key) {
     LRUHashNode* hnode = lru_hash_find(table, key);
     if (!hnode) return "NOT_FOUND";
 
-    // ключ использован – переносим узел в голову списка
+    // ключ использован – перенос узла в голову списка
     order.move_to_front(hnode->listNode);
     return hnode->value;
 }
@@ -35,11 +35,11 @@ void LRUCache::put(const string& key, const string& value) {
         }
     }
 
-    // создаём новый узел в голове списка
-    order.push_forward(key);           // ключ кладём в data
+    // новый узел в голове списка
+    order.push_forward(key);           // ключ в data
     TwoLinkedNode* node = order.head;  // только что добавленный узел
 
-    // добавляем в хэш-таблицу
+    // добавление в хэш-таблицу
     lru_hash_insert(table, key, value, node);
 
     size++;
