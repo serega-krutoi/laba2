@@ -1,4 +1,5 @@
 #include "ChainHashTable.h"
+#include<iostream>
 
 using namespace std;
 
@@ -21,10 +22,25 @@ size_t djb2_hash(const string& key) {
 // Вставка пары (key, value) в хеш-таблицу с цепочками
 void insert(const string& value, const string& key) {
     int index = djb2_hash(key);           // номер корзины
+    
+    // Проверка, не существует ли уже такой ключ
+    Node* current = hashTable[index];
+    while (current != nullptr) {
+        if (current->key == key) {
+            // Ключ уже существует - выводим сообщение
+            cout << "Ошибка: ключ '" << key << "' уже занят!" << endl;
+            return; // выходим без добавления
+        }
+        current = current->next;
+    }
+    
+    // Если ключ не найден, добавляем новый узел
     Node* newNode = new Node(key, value); // новый узел
     // Новый узел идёт в начало списка по индексу index
     newNode->next = hashTable[index];
     hashTable[index] = newNode;
+    
+    cout << "Ключ '" << key << "' успешно добавлен." << endl;
 }
 
 // Поиск значения по ключу в хеш-таблице

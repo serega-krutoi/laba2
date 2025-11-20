@@ -14,7 +14,7 @@ int main() {
         D   E   F
     */
 
-    // Ручное построение дерева для примера
+    // Ручное построение дерева
     Node* root = new Node("A");
     root->left = new Node("B");
     root->right = new Node("C");
@@ -22,7 +22,7 @@ int main() {
     root->left->right = new Node("E");
     root->right->right = new Node("F");
 
-    cout << "Обход дерева в глубину (DFS) через собственный стек:\n";
+    cout << "Обход дерева в глубину (DFS) через стек:\n";
     dfs(root);
     cout << endl;
 

@@ -23,6 +23,17 @@ size_t djb2_hash(const string& key) {
 void insert(const string& key, const string& value) {
     int index = djb2_hash(key);
 
+    // Сначала проверяем, нет ли уже такого ключа в таблице
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        int probe = (index + i) % TABLE_SIZE;
+        
+        // Если нашли существующий ключ (не удалённый)
+        if (table[probe] != nullptr && !table[probe]->isDelete && table[probe]->key == key) {
+            cout << "Ошибка: ключ '" << key << "' уже существует!" << endl;
+            return;
+        }
+    }
+
     // Линейное пробирование по таблице
     for (int i = 0; i < TABLE_SIZE; i++) {
         int probe = (index + i) % TABLE_SIZE; // переход к следующей позиции

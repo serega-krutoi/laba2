@@ -1,37 +1,26 @@
 #include "../include/dfs.h"
+#include "../include/stack.h"
 #include <iostream>
 using namespace std;
 
 void dfs(Node* root) {
     if (root == nullptr) return;
 
-    // Внутренняя структура: простой стек для указателей на узлы
-    struct NodeStack {
-        Node* node;
-        NodeStack* next;
-        NodeStack(Node* n) : node(n), next(nullptr) {}
-    };
-
-    NodeStack* top = nullptr;   // вершина стека
-    Node* current = root;       // указатель на текущий узел
+    Stack stack;  // Стек для указателей на Node
+    Node* current = root;
 
     // Центрированный обход: левый подузел, корень, правый подузел
-    while (current != nullptr || top != nullptr) {
+    while (current != nullptr || !stack.is_empty()) {
 
         // Движение к левому подузлу, узлы по пути кладутся в стек
         while (current != nullptr) {
-            NodeStack* newNode = new NodeStack(current);
-            newNode->next = top;
-            top = newNode;
-
+            stack.push(current);
             current = current->left;
         }
 
         // Снятие верхушки стека
-        NodeStack* temp = top;
-        top = top->next;
-        current = temp->node;
-        delete temp;
+        current = stack.top();
+        stack.pop();
 
         // Обработка узла в центре
         cout << current->data << " ";
