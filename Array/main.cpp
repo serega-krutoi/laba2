@@ -50,7 +50,7 @@ int main() {
         a[i] = stoll(listArray::get(arr, i));
     }
 
-    // Перебор всех подмассивов за O(n^2) без использования vector
+    // Перебор всех подмассивов за O(n^2) 
     bool found = false;
     for (size_t l = 0; l < n; ++l) {
         long long sum = 0;

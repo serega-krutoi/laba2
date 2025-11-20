@@ -41,7 +41,7 @@ int main() {
     for (int j = 0; j <= target; ++j) dp[j] = false;
     dp[0] = true;
 
-    // Классическое заполнение массива dp
+    // заполнение массива dp
     for (int i = 0; i < n; ++i) {
         int x = arr[i];
         for (int j = target; j >= x; --j) {
