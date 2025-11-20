@@ -9,7 +9,6 @@ using namespace std;
 
 //g++ main.cpp entity/array.cpp -o m 
 
-// Вспомогательная функция для печати подмассива от индекса l до r включительно
 static void print_subarray(const Array& arr, int l, int r) {
     cout << "[";
     for (int i = l; i <= r; ++i) {
@@ -23,12 +22,12 @@ int main() {
 
     cout << "Введите элементы массива через пробел и нажмите Enter:\n";
     string line;
-    // Считываем строку с элементами массива
+    // строку с элементами массива
     getline(cin, line);
     // Если первая попытка дала пустую строку, повторяем ввод
     while (line.size() == 0) getline(cin, line);
 
-    // Создаём динамический массив строк с начальной ёмкостью 16
+    // динамический массив строк с начальной ёмкостью 16
     Array arr = listArray::create(16);
     {
         // Разбираем введённую строку на подстроки по пробелам
@@ -44,7 +43,7 @@ int main() {
 
     const size_t n = listArray::length(arr);
 
-    // Перегоняем элементы из строк в числовой массив
+    // Перегон элементы из строк в числовой массив
     long long* a = nullptr;
     if (n > 0) a = new long long[n];
     for (size_t i = 0; i < n; ++i) {

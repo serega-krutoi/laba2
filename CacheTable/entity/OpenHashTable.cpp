@@ -1,4 +1,4 @@
-#include "OpenHashTable.h"
+#include "../include/OpenHashTable.h"
 
 using namespace std;
 
@@ -90,3 +90,49 @@ void remove(const string& key) {
         }
     }
 }
+
+// Печать всей таблицы (для наглядности)
+void print_table_open() {
+    cout << "=== Open addressing hash table ===\n";
+    for (int i = 0; i < TABLE_SIZE; ++i) {
+        cout << i << ": ";
+        if (table[i] == nullptr) {
+            cout << "(empty)";
+        } else if (table[i]->isDelete) {
+            cout << "(deleted)";
+        } else {
+            cout << "[" << table[i]->key << " -> " << table[i]->data << "]";
+        }
+        cout << "\n";
+    }
+    cout << "=================================\n";
+}
+
+// Небольшой тест
+int main() {
+    // вставка
+    insert("a", "1");
+    insert("b", "2");
+    insert("c", "3");
+    insert("d", "4");
+    insert("e", "5");
+
+    print_table_open();
+
+    // поиск существующих и отсутствующих ключей
+    cout << "search(\"c\") = " << search("c");
+    cout << "search(\"x\") = " << search("x");
+
+    // попытка вставить ключ, который уже есть
+    insert("a", "999"); // должно вывести сообщение об ошибке
+
+    // удаление и повторный поиск
+    cout << "remove(\"c\")\n";
+    remove("c");
+    print_table_open();
+
+    cout << "search(\"c\") = " << search("c");
+
+    return 0;
+}
+

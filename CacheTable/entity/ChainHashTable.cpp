@@ -1,4 +1,4 @@
-#include "ChainHashTable.h"
+#include "../include/ChainHashTable.h"
 #include<iostream>
 
 using namespace std;
@@ -83,3 +83,48 @@ void remove(const string& key) {
 
     delete current; // освобождение памяти узла
 }
+
+// Печать всей таблицы (для наглядности)
+/*void print_table_chain() {
+    cout << "=== Chain hash table ===\n";
+    for (int i = 0; i < TABLE_SIZE; ++i) {
+        cout << i << ": ";
+        Node* cur = hashTable[i];
+        if (!cur) {
+            cout << "(empty)";
+        }
+        while (cur) {
+            cout << "[" << cur->key << " -> " << cur->data << "] ";
+            cur = cur->next;
+        }
+        cout << "\n";
+    }
+    cout << "========================\n";
+}
+
+// Небольшой тест
+int main() {
+    // добавление
+    insert("one",   "a");
+    insert("two",   "b");
+    insert("three", "c");
+    insert("four",  "d");
+
+    print_table_chain();
+
+    // поиск
+    cout << "search(\"b\") = " << search("b") << "\n";
+    cout << "search(\"x\") = " << search("x") << "\n";
+
+    // попытка вставить ключ, который уже есть
+    insert("five", "a"); // должно сказать, что ключ уже занят
+
+    // удаление
+    cout << "remove(\"b\")\n";
+    remove("b");
+    print_table_chain();
+
+    cout << "search(\"b\") = " << search("b") << "\n";
+
+    return 0;
+}*/

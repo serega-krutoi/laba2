@@ -6,7 +6,6 @@
 
 using namespace std;
 
-// Печать vector<string> через пробел
 ostream& operator<<(ostream& os, const vector<string>& v) {
     if (v.empty()) return os;
     for (size_t i = 0; i + 1 < v.size(); ++i) {
@@ -44,7 +43,7 @@ class ThroneInheritance {
         return false;
     }
 
-    // рекурсивная функция из ТЗ:
+    // рекурсивная функция 
     // Successor(x, curOrder) возвращает имя следующего в порядке
     // или пустую строку, если кандидатов больше нет
     string Successor(const string& x, const vector<string>& curOrder) const {

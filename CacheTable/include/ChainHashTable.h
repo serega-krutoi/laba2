@@ -10,6 +10,9 @@ struct Node{
     Node(string k, string d) : key(k), data(d), next(nullptr) {}
 };
 
+extern const int TABLE_SIZE;
+extern Node* hashTable[];
+
 size_t djb2_hash(const string& key);
 void insert(const string& value, const string& key);
 string search(const string& key);
