@@ -27,14 +27,14 @@ void insert(const string& value, const string& key) {
     Node* current = hashTable[index];
     while (current != nullptr) {
         if (current->key == key) {
-            // Ключ уже существует - выводим сообщение
+            // Ключ уже существует - вывод сообщение
             cout << "Ошибка: ключ '" << key << "' уже занят!" << endl;
-            return; // выходим без добавления
+            return; 
         }
         current = current->next;
     }
     
-    // Если ключ не найден, добавляем новый узел
+    // Если ключ не найден, новый узел
     Node* newNode = new Node(key, value); // новый узел
     // Новый узел идёт в начало списка по индексу index
     newNode->next = hashTable[index];
@@ -84,7 +84,9 @@ void remove(const string& key) {
     delete current; // освобождение памяти узла
 }
 
-// Печать всей таблицы (для наглядности)
+// Далее для демострации работы таблицы, поэтому закомментированно
+
+// Печать всей таблицы 
 /*void print_table_chain() {
     cout << "=== Chain hash table ===\n";
     for (int i = 0; i < TABLE_SIZE; ++i) {
@@ -102,7 +104,6 @@ void remove(const string& key) {
     cout << "========================\n";
 }
 
-// Небольшой тест
 int main() {
     // добавление
     insert("one",   "a");

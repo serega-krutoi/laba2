@@ -88,7 +88,6 @@ string decode_string(NodeHoffQueue* root, const string& encoded) {
             return "";
         }
         
-        // Если достигли листа - добавляем символ и возвращаемся к корню
         if (current->left == nullptr && current->right == nullptr) {
             decoded += current->data;
             current = root;

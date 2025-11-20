@@ -8,7 +8,7 @@ bool HoffQueue::is_empty() {
 
 // Вставка узла в очередь Хаффмана с сохранением порядка по возрастанию приоритета
 void HoffQueue::push_sorted(NodeHoffQueue* node) {
-    // Если очередь пуста или приоритет нового узла меньше первого — ставим в начало
+    // Если очередь пуста или приоритет нового узла меньше первого — ставить в начало
     if (head == nullptr || node->priority < head->priority) {
         node->next = head;
         head = node;
@@ -38,7 +38,7 @@ NodeHoffQueue* HoffQueue::pop_min() {
 
 // Построение дерева Хаффмана на основе отсортированной очереди
 NodeHoffQueue* buildHuffman(HoffQueue& hoff) {
-    // Пока в очереди больше одного узла — объединяем два минимальных
+    // Пока в очереди больше одного узла — объединять два минимальных
     while (!hoff.is_empty() && hoff.head->next != nullptr) {
 
         // Извлекаются два узла с наименьшим приоритетом

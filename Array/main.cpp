@@ -22,15 +22,13 @@ int main() {
 
     cout << "Введите элементы массива через пробел и нажмите Enter:\n";
     string line;
-    // строку с элементами массива
     getline(cin, line);
-    // Если первая попытка дала пустую строку, повторяем ввод
+
     while (line.size() == 0) getline(cin, line);
 
     // динамический массив строк с начальной ёмкостью 16
     Array arr = listArray::create(16);
     {
-        // Разбираем введённую строку на подстроки по пробелам
         stringstream ss(line);
         string token;
         while (ss >> token) listArray::push_back(arr, token);
@@ -43,25 +41,24 @@ int main() {
 
     const size_t n = listArray::length(arr);
 
-    // Перегон элементы из строк в числовой массив
+    // Перегон элементов из строк в числовой массив
     long long* a = nullptr;
     if (n > 0) a = new long long[n];
     for (size_t i = 0; i < n; ++i) {
         a[i] = stoll(listArray::get(arr, i));
     }
 
-    // Перебор всех подмассивов за O(n^2) 
+    // Перебор всех подмассивов
     bool found = false;
     for (size_t l = 0; l < n; ++l) {
         long long sum = 0;
         for (size_t r = l; r < n; ++r) {
-            sum += a[r]; // накапливаем сумму текущего подмассива [l..r]
+            sum += a[r]; 
             if (sum == target) {
                 if (!found) {
                     cout << "Подмассивы:\n";
                     found = true;
                 }
-                // Выводим подмассив, который даёт нужную сумму
                 print_subarray(arr, (int)l, (int)r);
             }
         }
@@ -72,7 +69,6 @@ int main() {
         cout << "Подмассивов с суммой " << target << " не найдено.\n";
     }
 
-    // Освобождаем память
     delete[] a;
     listArray::destroy(arr);
     return 0;

@@ -29,7 +29,6 @@ void listArray::destroy(Array& arr) {
 }
 
 // Увеличение ёмкости массива на один элемент
-// (простая реализация, не оптимальная по времени, но наглядная)
 void listArray::increase_capacity(Array& arr) {
     size_t new_cap = arr.cap + 1;
     
@@ -38,15 +37,15 @@ void listArray::increase_capacity(Array& arr) {
         throw length_error("Объём превысил максимум");
     }
     
-    // Выделяем новый буфер увеличенного размера
+    // Выделение нового буфера увеличенного размера
     string* new_arr = new string[new_cap];
     
-    // Копируем существующие элементы в новый массив
+    // Копирование существующих элементов в новый массив
     for (size_t i = 0; i < arr.size; i++) {
         new_arr[i] = arr.data[i];
     }
     
-    // Освобождаем старый буфер и перекидываем указатель
+    // Освобждение старого буфера
     delete[] arr.data;
     arr.data = new_arr;
     arr.cap = new_cap;
@@ -66,9 +65,9 @@ void listArray::push_back(Array& arr, string value) {
         return;
     }
     
-    // При необходимости увеличиваем ёмкость
+    // При необходимости увеличение ёмкости
     test_capacity(arr);
-    // Записываем значение в конец и увеличиваем размер
+    // запись значения в конец
     arr.data[arr.size++] = value;
 }
 
@@ -79,12 +78,12 @@ void listArray::insert(Array& arr, size_t idx, string value) {
     
     test_capacity(arr);
     
-    // Сдвигаем элементы вправо, начиная с конца, чтобы освободить место
+    // Сдвиг элементы вправо, начиная с конца, чтобы освободить место
     for (size_t i = arr.size; i > idx; i--) {
         arr.data[i] = arr.data[i - 1];
     }
     
-    // Записываем новое значение на нужную позицию
+    // Запись новое значение на нужную позицию
     arr.data[idx] = value;
     arr.size++;
 }

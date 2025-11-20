@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 #include "include/kashLRU.h"
 
 using namespace std;
@@ -44,7 +45,6 @@ int main() {
 
     string cmd, x, y;
 
-    // ---- СЧИТЫВАЕМ ВСЕ КОМАНДЫ ----
     for (int i = 0; i < Q; ++i) {
         string line;
         cin >> cmd;
@@ -61,7 +61,6 @@ int main() {
 
     cout << "Cache Size = " << cap << "\n\n";
 
-    // ---- ВЫПОЛНЕНИЕ КОМАНД ----
     for (string& line : commands) {
         stringstream ss(line);
         ss >> cmd;
@@ -73,7 +72,6 @@ int main() {
 
             cache.put(x, y);
 
-            // Печатаем состояние кэша после вставки
             printCachePairs(cache.order, cache.table);
         }
         else if (cmd == "GET") {
@@ -97,16 +95,3 @@ int main() {
     return 0;
 }
 
-            if (!firstOutput) cout << " ";
-            firstOutput = false;
-
-            if (res == "NOT_FOUND")
-                cout << -1;
-            else
-                cout << res;
-        }
-    }
-
-    cout << endl;
-    return 0;
-}

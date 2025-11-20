@@ -4,17 +4,10 @@
 
 using namespace std;
 
-//const int TABLE_SIZE = 5;
-//Node* hashTable[TABLE_SIZE];
-
 // Проверка, являются ли две строки изоморфными
 bool areIsomorphic(const string& a, const string& b) {
     // При различной длине строк изоморфия невозможна
     if (a.size() != b.size()) return false;
-
-    // Две хеш-таблицы:
-    // mapAB: символ из a отображается в символ из b
-    // mapBA: символ из b отображается в символ из a
     
     // Инициализируем хеш-таблицы
     for (int i = 0; i < TABLE_SIZE; ++i) {
@@ -25,7 +18,6 @@ bool areIsomorphic(const string& a, const string& b) {
         char ca = a[i];
         char cb = b[i];
 
-        // Оборачиваем символ в строку длины 1
         string keyA(1, ca);
         string keyB(1, cb);
 
@@ -43,7 +35,7 @@ bool areIsomorphic(const string& a, const string& b) {
             return false;
         }
 
-        // Новое соответствие с обеих сторон отсутствует — создаём его
+        // Новое соответствие с обеих сторон отсутствует — создать его
         if (mappedB == "Not found" && mappedA == "Not found") {
             insert(keyB, keyA); // a[i] → b[i]
             insert(keyA, keyB); // b[i] → a[i]

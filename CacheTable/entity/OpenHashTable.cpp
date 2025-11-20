@@ -23,7 +23,7 @@ size_t djb2_hash(const string& key) {
 void insert(const string& key, const string& value) {
     int index = djb2_hash(key);
 
-    // Сначала проверяем, нет ли уже такого ключа в таблице
+    // Сначала проверка, нет ли уже такого ключа в таблице
     for (int i = 0; i < TABLE_SIZE; i++) {
         int probe = (index + i) % TABLE_SIZE;
         
